@@ -4,6 +4,10 @@ For plotting performance, we're using [gnuplot](http://www.gnuplot.info/).
 Check out [a collection of gnuplot
 examples](http://alvinalexander.com/technology/gnuplot-charts-graphs-examples).
 
+Here's an example output from our plotting script:
+
+![](data/kth-element.png)
+
 ## javascript
 
 ```shell

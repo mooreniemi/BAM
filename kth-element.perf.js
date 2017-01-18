@@ -26,16 +26,22 @@ function generateArray(size) {
   return new Array(10 * size);
 };
 
-var x = timePerformanceOf(KthElement.find, 5, generateArray);
+var TIMES = 5000;
+var x = timePerformanceOf(KthElement.find, TIMES, generateArray);
+var x2 = timePerformanceOf(KthElement.cheat, TIMES, generateArray);
 var y = Array.apply(null, {length: x.length}).map(function(_,x) { return 10 * x; });
 
 var chart = x.map(function (e, i) {
-  return { x: e, y: y[i] };
+  return {
+    find: e,
+    cheat: x2[i],
+    inputSize: y[i]
+  };
 });
-var fields = ['x','y'];
-var fieldNames = ['execution time', 'input size'];
 
-var text = json2csv({ data: chart, fields: fields, fieldNames: fieldNames, hasCSVColumnTitle: false });
+var fields = ['find', 'cheat', 'inputSize'];
+
+var text = json2csv({ data: chart, fields: fields, hasCSVColumnTitle: false });
 fs.writeFile("./data/kth-element.csv", text, function(err) {
   if(err) {
     return console.log(err);
@@ -48,8 +54,8 @@ fs.writeFile("./data/kth-element.csv", text, function(err) {
     set('output "data/kth-element.png"').
     set('title "Performance of Kth Element"').
     set('xlabel "input size"').
-    set('ylabel "execution time"').
+    set('ylabel "execution time (seconds)"').
     set('datafile separator ","').
-    plot('"data/kth-element.csv" using 2:1 w l').
+    plot('"data/kth-element.csv" using 3:1 w l title "find", "data/kth-element.csv" using 3:2 w l title "cheat"').
     end();
 });
