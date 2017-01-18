@@ -1,5 +1,9 @@
 # BAM - Boston Algorithms Meetup
 
+For plotting performance, we're using [gnuplot](http://www.gnuplot.info/).
+Check out [a collection of gnuplot
+examples](http://alvinalexander.com/technology/gnuplot-charts-graphs-examples).
+
 ## javascript
 
 ```shell
