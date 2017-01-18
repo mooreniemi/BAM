@@ -51,7 +51,7 @@ var chart = x.map(function (e, i) {
 var fields = ['find', 'cheat', 'inputSize'];
 
 var text = json2csv({ data: chart, fields: fields, hasCSVColumnTitle: false });
-fs.writeFile("./data/kth-element.csv", text, function(err) {
+fs.writeFile("../data/kth-element.csv", text, function(err) {
   if(err) {
     return console.log(err);
   }
@@ -60,11 +60,11 @@ fs.writeFile("./data/kth-element.csv", text, function(err) {
 
   gnuplot().
     set('term png').
-    set('output "data/kth-element.png"').
+    set('output "../data/kth-element.png"').
     set('title "Performance of Kth Element"').
     set('xlabel "input size"').
     set('ylabel "execution time (seconds)"').
     set('datafile separator ","').
-    plot('"data/kth-element.csv" using 3:1 w l title "find", "data/kth-element.csv" using 3:2 w l title "cheat"').
+    plot('"../data/kth-element.csv" using 3:1 w l title "find", "../data/kth-element.csv" using 3:2 w l title "cheat"').
     end();
 });
