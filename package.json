@@ -1,0 +1,27 @@
+{
+  "name": "bam",
+  "version": "1.0.0",
+  "description": "boston algorithms meetup",
+  "main": "kth-element.js",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "chart.js": "^2.4.0",
+    "gnuplot": "^0.3.1",
+    "json2csv": "^3.7.3",
+    "jsverify": "^0.7.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mooreniemi/BAM.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mooreniemi/BAM/issues"
+  },
+  "homepage": "https://github.com/mooreniemi/BAM#readme"
+}
