@@ -1,3 +1,8 @@
+// This script is for comparing KthElement find vs cheat.
+// you can run it in the terminal using node:
+// $ node kth-element.perf.js
+// cheat should have roughly O(n log n) performance dominated by sort
+// find should have roughly O(n) performance when completed
 'use strict';
 
 var fs = require('fs');
@@ -22,14 +27,18 @@ function timePerformanceOf(doSomething, times, inputGenerator) {
   return runs;
 };
 
+function growthRate(n) {
+  return 10 * n;
+};
+
 function generateArray(size) {
-  return new Array(10 * size);
+  return new Array(growthRate(size));
 };
 
 var TIMES = 5000;
 var x = timePerformanceOf(KthElement.find, TIMES, generateArray);
 var x2 = timePerformanceOf(KthElement.cheat, TIMES, generateArray);
-var y = Array.apply(null, {length: x.length}).map(function(_,x) { return 10 * x; });
+var y = Array.apply(null, {length: x.length}).map(function(_,x) { return growthRate(x); });
 
 var chart = x.map(function (e, i) {
   return {
