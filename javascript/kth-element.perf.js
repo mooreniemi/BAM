@@ -14,8 +14,9 @@ function timePerformanceOf(doSomething, times, inputGenerator) {
   var runs = [];
   for (var i = 0; i < times; i++) {
     var input = inputGenerator.call(null, i);
+    console.log({input})
     var t = process.hrtime();
-    doSomething(input);
+    doSomething(input, i);
     t = process.hrtime(t);
     var seconds = t[0] + (t[1] / 1000000000);
     runs.push(seconds);
@@ -32,10 +33,10 @@ function growthRate(n) {
 };
 
 function generateArray(size) {
-  return new Array(growthRate(size));
+  return Array.apply(null, {length: growthRate(size)}).map(Function.call, Math.random);
 };
 
-var TIMES = 5000;
+var TIMES = 500;
 var x = timePerformanceOf(KthElement.find, TIMES, generateArray);
 var x2 = timePerformanceOf(KthElement.cheat, TIMES, generateArray);
 var y = Array.apply(null, {length: x.length}).map(function(_,x) { return growthRate(x); });
