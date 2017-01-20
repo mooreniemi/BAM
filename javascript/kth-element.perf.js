@@ -8,15 +8,18 @@
 var fs = require('fs');
 var gnuplot = require('./node_modules/gnuplot/gnuplot.js');
 var json2csv = require('./node_modules/json2csv/dist/json2csv.js');
+var ProgressBar = require('progress');
 var KthElement = require('./kth-element.js');
 
 // NOTE: expects doSomething to take first argument of inputGenerator's
 // return type, and second argument is a Number, and nothing else
 function timePerformanceOf(doSomething, times, inputGenerator) {
-  var runs = [];
+  var runs = [],
+      bar = new ProgressBar(':bar', { total: times });
+
   for (var i = 0; i < times; i++) {
+    bar.tick();
     var input = inputGenerator.call(null, i);
-    console.log({input})
     var t = process.hrtime();
     doSomething(input, i);
     t = process.hrtime(t);
@@ -38,7 +41,7 @@ function generateArray(size) {
   return Array.apply(null, {length: growthRate(size)}).map(Function.call, Math.random);
 };
 
-var TIMES = 500;
+var TIMES = 5000;
 var x = timePerformanceOf(KthElement.find, TIMES, generateArray);
 var x2 = timePerformanceOf(KthElement.cheat, TIMES, generateArray);
 var y = Array.apply(null, {length: x.length}).map(function(_,x) { return growthRate(x); });
