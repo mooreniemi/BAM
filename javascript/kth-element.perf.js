@@ -10,6 +10,8 @@ var gnuplot = require('./node_modules/gnuplot/gnuplot.js');
 var json2csv = require('./node_modules/json2csv/dist/json2csv.js');
 var KthElement = require('./kth-element.js');
 
+// NOTE: expects doSomething to take first argument of inputGenerator's
+// return type, and second argument is a Number, and nothing else
 function timePerformanceOf(doSomething, times, inputGenerator) {
   var runs = [];
   for (var i = 0; i < times; i++) {
