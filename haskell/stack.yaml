@@ -1,0 +1,8 @@
+flags: {}
+extra-package-dbs: []
+packages:
+- '.'
+extra-deps:
+- data-accessor-transformers-0.2.1.7
+- gnuplot-0.5.4.1
+resolver: lts-7.16
