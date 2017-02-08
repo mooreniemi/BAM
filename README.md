@@ -24,6 +24,24 @@ bundle install # dependencies
 rspec # runs test runner
 ```
 
+## haskell
+
+```shell
+curl -sSL https://get.haskellstack.org/ | sh # package manager
+stack setup # installs compiler
+stack test # runs tests
+stack bench # benchmarks
+```
+
+## scala
+
+Get [sbt](http://www.scala-sbt.org/download.html), then:
+```shell
+sbt test # runs tests
+sbt run # benchmarks
+```
+
+
 Check out [a gentle TDD
 introduction](http://jrsinclair.com/articles/2016/gentle-introduction-to-javascript-tdd-intro/)
 for some basic instructions on workflow.
