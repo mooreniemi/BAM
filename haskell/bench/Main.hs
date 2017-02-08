@@ -47,16 +47,14 @@ main = do
   defaultMainWith config [
     bgroup "main" [
         bgroup "find" $ map (run quickselect) testData
-        , bgroup "findS" $ map (run quickselect) testData
         , bgroup "cheat" $ map (run sortselect) testData
         ]
     ]
   (Right records) <- readRecords rawOut
   let records' = map (\(Analysed r) -> r) records
   let find' = extractOutcomes (filterReports "main/find/" records')
-      findS' = extractOutcomes (filterReports "main/findS/" records')
       cheat' = extractOutcomes (filterReports "main/cheat/" records')
-      results = zip4 find' findS' cheat' range
+      results = zip3 find' cheat' range
   BL.writeFile csvOut (encode results)
   plot (PNG.cons pngOut) resultPlot
   return ()
@@ -71,15 +69,13 @@ resultPlot =
         LineSpec.title title $
         LineSpec.deflt
       lineSpec1 = lineSpec "find"
-      lineSpec2 = lineSpec "findSimple"
-      lineSpec3 = lineSpec "cheat"
+      lineSpec2 = lineSpec "cheat"
       frameOpts =
         Opts.xLabel "input size" $
         Opts.yLabel "execution time (seconds)" $
         Opts.title "Performance of Kth Element" $
         Opts.add (Opt.custom "datafile separator" "") ["\",\""] $
         Opts.deflt
-      path1 = fmap lineSpec1 $ Plot2D.pathFromFile Graph2D.lines csvOut 4 1
-      path2 = fmap lineSpec2 $ Plot2D.pathFromFile Graph2D.lines csvOut 4 2
-      path3 = fmap lineSpec3 $ Plot2D.pathFromFile Graph2D.lines csvOut 4 3
-  in Frame.cons frameOpts $ mconcat [path1, path2, path3]
+      path1 = fmap lineSpec1 $ Plot2D.pathFromFile Graph2D.lines csvOut 3 1
+      path2 = fmap lineSpec2 $ Plot2D.pathFromFile Graph2D.lines csvOut 3 2
+  in Frame.cons frameOpts $ mconcat [path1, path2]
