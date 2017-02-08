@@ -10,4 +10,4 @@ sortselect :: Int -> Vector Int -> Maybe Int
 sortselect k = (V.!? (k-1)) . V.modify I.sort
 
 quickselect :: Int -> Vector Int -> Maybe Int
-quickselect k xs = Just k
+quickselect k xs = undefined
