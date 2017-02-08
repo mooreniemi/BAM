@@ -13,6 +13,15 @@ Here's an example output from our plotting script:
 ```shell
 npm install mocha -g # your test runner executable
 npm install # installs chai, etc
+npm run test # runs test runner
+```
+
+## ruby
+
+```shell
+gem install bundler # package manager
+bundle install # dependencies
+rspec # runs test runner
 ```
 
 Check out [a gentle TDD
