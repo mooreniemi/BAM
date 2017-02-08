@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gem 'pry'
+gem 'rantly'
+gem 'graph-function'
+gem 'rspec'
