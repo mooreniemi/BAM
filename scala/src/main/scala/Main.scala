@@ -1,10 +1,12 @@
 import Quickselect._
 import scala.util.Random
-import java.io.{File, PrintWriter}
+import java.io.{File, FileInputStream, PrintWriter}
+import javax.imageio.ImageIO
 import com.panayotis.gnuplot.JavaPlot
 import com.panayotis.gnuplot.dataset.ArrayDataSet
 import com.panayotis.gnuplot.plot.DataSetPlot
 import com.panayotis.gnuplot.style.{PlotStyle, Style}
+import com.panayotis.gnuplot.terminal.ImageTerminal
 import org.scalameter._
 
 object Main {
@@ -39,15 +41,23 @@ object Main {
   }
 
   def doPlot(results: Seq[Seq[Double]], filename: String): Unit = {
+    val png = new ImageTerminal()
+    val outFile = new File(filename)
+    try {
+      outFile.createNewFile()
+      png.processOutput(new FileInputStream(outFile))
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
     val p = new JavaPlot
+    p.setTerminal(png)
+    p.setPersist(false)
     p.setTitle("Performance of Kth Element")
     p.getAxis("x").setLabel("input size")
     p.getAxis("y").setLabel("execution time (seconds)")
 
-    // val Seq(timesFind, timesFindSimple, timesSort) = results
     val Seq(timesFind, timesSort) = results
-    for ((name, times) <- Seq( // ("quickselectSimple", timesFindSimple),
-                              ("quickselect", timesFind),
+    for ((name, times) <- Seq(("quickselect", timesFind),
                               ("sort", timesSort)
                               )) {
       val ts: Array[Array[Double]] =
@@ -58,13 +68,17 @@ object Main {
       p.addPlot(plot)
     }
     p.plot()
+
+    try {
+      ImageIO.write(png.getImage(), "png", outFile)
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
   }
 
   def main(args: Array[String]): Unit = {
     val timesFind = getTimesFor(quickselect)
-    // val timesFindSimple = getTimesFor(quickselectSimple)
     val timesSort = getTimesFor(sortselect)
-    // val allTimes = Seq(timesFind, timesFindSimple, timesSort)
     val allTimes = Seq(timesFind, timesSort)
     val output = allTimes :+ inputRange.map(_.toDouble)
     writeCSV("../data/kth-element-scala.csv", output)
